@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Separate Chaining 해시 테이블의 삽입, 검색, 삭제를 직접 확인하는 자료구조와 알고리즘 Lab 7">
+  <title>Hash Table Playground</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <p class="eyebrow">자료구조와 알고리즘 · LAB 7</p>
+      <h1>Hash Table Playground</h1>
+      <p class="intro">키를 넣고, 검색하고, 삭제하면서 해시 테이블의 버킷과 충돌 처리를 살펴보세요.</p>
+    </header>
+
+    <section class="panel controls" aria-labelledby="operation-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">INTERACTIVE LAB</p>
+          <h2 id="operation-title">테이블 연산</h2>
+        </div>
+        <span class="bucket-rule">h(key) = key % 7</span>
+      </div>
+
+      <form id="operation-form" novalidate>
+        <div class="input-grid">
+          <label class="field" for="key-input">
+            <span>키 <span class="field-hint">정수 · 0–999999</span></span>
+            <input id="key-input" name="key" type="number" min="0" max="999999" step="1" inputmode="numeric" placeholder="예: 42" required>
+          </label>
+          <label class="field" for="value-input">
+            <span>값 <span class="field-hint" id="value-hint">삽입 시 필요 · 검색·삭제에는 불필요</span></span>
+            <input id="value-input" name="value" type="text" maxlength="40" placeholder="예: 알고리즘">
+          </label>
+        </div>
+
+        <div class="button-row" aria-label="해시 테이블 연산">
+          <button class="button button-primary" type="button" data-action="insert">삽입·수정</button>
+          <button class="button button-secondary" type="button" data-action="search">검색</button>
+          <button class="button button-secondary" type="button" data-action="delete">삭제</button>
+          <button class="button button-quiet" type="button" data-action="reset">초기화</button>
+        </div>
+      </form>
+
+      <div id="result" class="result" role="status" aria-live="polite" data-kind="neutral">
+        <span class="result-mark" aria-hidden="true">i</span>
+        <p>키와 값을 입력한 뒤 연산을 선택하세요.</p>
+      </div>
+    </section>
+
+    <section class="panel table-panel" aria-labelledby="table-title">
+      <div class="section-heading table-heading">
+        <div>
+          <p class="eyebrow">BUCKET VIEW</p>
+          <h2 id="table-title">버킷 배열</h2>
+        </div>
+        <p class="table-note">각 노드의 <code>next</code>가 다음 항목을 가리킵니다.</p>
+      </div>
+      <div id="bucket-list" class="bucket-list" aria-live="polite"></div>
+    </section>
+
+    <section class="explanation" aria-labelledby="concept-title">
+      <p class="eyebrow">QUICK NOTES</p>
+      <h2 id="concept-title">해시 테이블 살펴보기</h2>
+      <div class="concept-grid">
+        <article class="concept-card">
+          <span class="concept-number">01</span>
+          <h3>해시 함수</h3>
+          <p>키를 7로 나눈 나머지 <code>h(key) = key % 7</code>을 버킷 번호로 사용합니다.</p>
+        </article>
+        <article class="concept-card">
+          <span class="concept-number">02</span>
+          <h3>Separate Chaining</h3>
+          <p>같은 버킷에 도착한 항목은 연결 리스트로 이어 저장합니다. 같은 키를 다시 넣으면 값을 수정합니다.</p>
+        </article>
+        <article class="concept-card cost-card">
+          <span class="concept-number">03</span>
+          <h3>연산 비용</h3>
+          <p>균등 분포 가정에서 평균 비용은 <code>O(1 + α)</code>, 최악은 <code>O(n)</code>입니다.</p>
+          <p class="load-factor"><code>α = n / 7</code> <span>현재 적재율 <strong id="load-factor">0.00</strong></span></p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="page-footer">DATA STRUCTURES &amp; ALGORITHMS · LAB 7</footer>
+  </main>
+</body>
+</html>
+
